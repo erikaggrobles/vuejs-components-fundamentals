@@ -5,9 +5,10 @@ let BlogPostComponent = {
       blogPost: null
     }
   },
-  created () {
+  created () { //runs when the component is created
     axios.get('api/posts/' + this.id).then(response => {
-      this.blogPost = response.data
+      this.blogPost = response.data;
     })
-  }
+  } //this is still a function just like data, we have access to the components instance
 }
+

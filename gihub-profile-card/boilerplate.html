@@ -3,37 +3,43 @@
 <head>
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <title>RB GitHub Profiles</title>
 </head>
 
 <body>
 
   <div id="app"
        class="ui container">
-    <h1>GitHub Profiles</h1>
-    <github-user-card username="hootlex"></github-user-card>
+    <h1>Ravenblack GitHub Profiles</h1>
+    <!-- <github-user-card username="hootlex"></github-user-card> -->
+    <div class="profile-grid">
+      <github-profile-card v-for="username in usernames" :username="username"></github-profile-card>
+    </div>
+    
+  </div>
 
-    <!-- Template for GitHub card -->
+  <script type="text/x-template" id="github-profile-card-template">
     <div class="ui card">
       <div class="image">
-        <img src="https://semantic-ui.com/images/avatar2/large/kristy.png">
+        <img :src="user.avatar_url">
       </div>
       <div class="content">
-        <a class="header">Kristy</a>
+        <a class="header" :href="user.html_url">{{username}}</a>
         <div class="meta">
-          <span class="date">Joined in 2013</span>
+          <span class="date">Joined in {{yearJoined}}</span>
         </div>
         <div class="description">
-          Kristy is an art director living in New York.
+          {{user.bio}}
         </div>
       </div>
       <div class="extra content">
-        <a>
+        <a :href="`https://github.com/${username}?tab=followers`">
           <i class="user icon"></i>
-          22 Friends
+          {{user.followers}} Friends
         </a>
       </div>
     </div>
-  </div>
+  </script>
 
   <!-- Import Vue.js and axios -->
   <script src="https://unpkg.com/vue@2"></script>
@@ -41,10 +47,52 @@
 
   <!-- Your JavaScript Code :) -->
   <script>
+
+    Vue.component('github-profile-card', {
+      template: "#github-profile-card-template",
+      data () {
+        return {
+          user: {}
+        }
+      },
+      props: {
+        username:String
+      },
+      created() {
+        axios.get('https://api.github.com/users/' + this.username).then(response => {
+          this.user = response.data;
+        })
+      },
+      computed: {
+        yearJoined() {
+          return this.user.created_at.slice(0, 4);
+        }
+      }
+
+    })
+
     new Vue({
-      el: '#app'
+      el: '#app',
+      data() {
+        return {
+          usernames: ["erikaggrobles", "gpetti", "Gabtoof", "ahristoskov", "aniketvarpe123", "bashtroboy", "GauriShinde1409"]
+        }
+      }
     })
   </script>
 </body>
+
+<style>
+  h1 {
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 10px; 
+    grid-row-gap: 10px;
+  }
+</style>
 
 </html>

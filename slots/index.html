@@ -11,33 +11,23 @@
 <body>
   <div id="app">
     <h1>Vue.js Slots Fundamentals</h1>
-
     <todo-item>
-      Buy Bananas
-
+      Bananas 
       <template #description>
         <p>
-          Bananas are good for your health.
+          Bananas are good for your health
         </p>
       </template>
-
       <template #button-text>
         Make it rain
-      </template>
-
+      </template>      
     </todo-item>
-
     <todo-item>
-      Eat Bananas
-
-      <template #description>
-        <p>
-          Bananas are good.
-        </p>
-      </template>
-
+      Oranges
     </todo-item>
-
+    <todo-item>
+      Apples
+    </todo-item>
   </div>
 
   <script type="text/x-template" id="todo-item-template">
@@ -52,8 +42,6 @@
       </button>
     </div>
   </script>
-
-
   <script src="https://unpkg.com/vue@2"></script>
   <script src="app.js"></script>
   <style>

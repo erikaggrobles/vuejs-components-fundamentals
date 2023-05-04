@@ -1,3 +1,5 @@
+//instead of passing items using props we use slots
+
 Vue.component('todo-item', {
   template: '#todo-item-template',
   data () {
@@ -7,6 +9,6 @@ Vue.component('todo-item', {
   }
 })
 
-new Vue({
+new Vue ({
   el: '#app'
 })
